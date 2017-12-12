@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"No description"</Description>
+      <LastState Value="7" RealAddress="C04206BE58"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>C04206BE58</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"No description"</Description>
+      <LastState Value="7" RealAddress="C04206BE50"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>C04206BE50</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"must lock p1 but lock both"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : 05-healthgame.exe
+  Version: 
+  Date   : 2017-12-11
+  Author : elvis
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ 
+ 
+aobscanmodule(INJECT,healthgame.exe,48 89 08 E9 BE FE FF FF) // should be unique
+alloc(newmem,$1000,"healthgame.exe"+A5EFD)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rax],7
+  jmp healthgame.exe+A5DC3
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+INJECT:
+  db 48 89 08 E9 BE FE FF FF
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "healthgame.exe"+A5EFD
+
+"healthgame.exe"+A5ED4: 48 89 4C 24 60                       -  mov [rsp+60],rcx
+"healthgame.exe"+A5ED9: 48 89 0C 24                          -  mov [rsp],rcx
+"healthgame.exe"+A5EDD: 48 89 44 24 08                       -  mov [rsp+08],rax
+"healthgame.exe"+A5EE2: E8 29 8B FD FF                       -  call healthgame.exe+7EA10
+"healthgame.exe"+A5EE7: 48 8B 44 24 10                       -  mov rax,[rsp+10]
+"healthgame.exe"+A5EEC: 48 83 F8 01                          -  cmp rax,01
+"healthgame.exe"+A5EF0: 75 13                                -  jne healthgame.exe+A5F05
+"healthgame.exe"+A5EF2: 48 8D 44 24 48                       -  lea rax,[rsp+48]
+"healthgame.exe"+A5EF7: 48 8B 08                             -  mov rcx,[rax]
+"healthgame.exe"+A5EFA: 48 FF C9                             -  dec rcx
+// ---------- INJECTING HERE ----------
+"healthgame.exe"+A5EFD: 48 89 08                             -  mov [rax],rcx
+"healthgame.exe"+A5F00: E9 BE FE FF FF                       -  jmp healthgame.exe+A5DC3
+// ---------- DONE INJECTING  ----------
+"healthgame.exe"+A5F05: 48 83 F8 02                          -  cmp rax,02
+"healthgame.exe"+A5F09: 75 07                                -  jne INJECT
+"healthgame.exe"+A5F0B: 48 8D 44 24 40                       -  lea rax,[rsp+40]
+"healthgame.exe"+A5F10: EB E5                                -  jmp healthgame.exe+A5EF7
+"healthgame.exe"+A5F12: 48 8B 44 24 60                       -  mov rax,[rsp+60]
+"healthgame.exe"+A5F17: 48 89 44 24 70                       -  mov [rsp+70],rax
+"healthgame.exe"+A5F1C: 48 8B 44 24 38                       -  mov rax,[rsp+38]
+"healthgame.exe"+A5F21: 48 89 44 24 78                       -  mov [rsp+78],rax
+"healthgame.exe"+A5F26: 48 C7 84 24 80 00 00 00 00 00 00 00  -  mov [rsp+00000080],00000000
+"healthgame.exe"+A5F32: 48 C7 84 24 88 00 00 00 00 00 00 00  -  mov [rsp+00000088],00000000
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_BASE_ADDRESS</Name>
+      <Address>03720000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_HEALTH_ADDRESS</Name>
+      <Address>03A70000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Comments>Info about this table:
+</Comments>
+</CheatTable>
