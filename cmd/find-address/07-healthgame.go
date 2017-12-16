@@ -1,3 +1,6 @@
+/**
+ * Estrutura multipointer para chegar no valor real, esse problema é analogo ao 6 e 8 porem com este exemplo o AOB funciona
+ */
 package main 
 
 import (
